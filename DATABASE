@@ -1,0 +1,101 @@
+create table User(
+	id serial primary key not null,
+	email varchar(255) not null,
+	password varchar(255) not null,
+	role varchar(255) not null,
+	createdAt timestamp not null,
+	updatedAt timestamp	not null
+);
+create table Basket(
+	id serial primary key not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null,
+	userid int,
+	foreign key (userid) references User(id)
+);
+create table BasketProducts(
+	id serial primary key not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null,
+	Basketid int,
+	foreign key (Basketid) references Basket(id)
+);
+create table types(
+	id serial primary keynot null,
+	name varchar(255) not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null
+);
+create table products(
+	id serial primary key not null,
+	name varchar(255) not null,
+	price int not null,
+	img varchar(255) not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null,
+	BasketProductid int,
+	typeid int,
+	foreign key (BasketProductid) references BasketProducts(id),
+	foreign key (typeid) references types(id)
+);
+create table BasketProduct(
+	createdAt timestamp not null,
+	updatedAt timestamp not null,
+	Basketid serial,
+	productid serial,
+	foreign key (productid) references products(id)
+	foreign key (Basketid) references Basket(id)
+);
+create table characteristic_motherboard(
+	id serial primary key not null,
+	socket varchar(255) not null,
+	chipset varchar(255) not null,
+	max_ram int not null,
+	type_ram varchar(255) not null,
+	form_factor varchar(255) not null,
+	max_ram_hz int not null,
+	audio_chip varchar(255) not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null,
+	productid serial,
+	foreign key (productid) references BasketProduct(id),
+	foreign key (productid) references types(id)
+);
+create table characteristic_desktops(
+	id serial primary key not null,
+	processer varchar(255) not null,
+	processer_model varchar(255) not null,
+	motherboard varchar(255) not null,
+	ram int not null,
+	ssd int not null,
+	videocard varchar(255) not null,
+	block_power int not null,
+	type_ram varchar(255) not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null
+)
+create table characteristic_laptops(
+	id serial primary key not null,
+	processer varchar(255) not null,
+	processer_model varchar(255) not null,
+	motherboard varchar(255) not null,
+	ram int not null,
+	ssd int not null,
+	display int not null,
+	display_hz int not null,
+	videocard varchar(255) not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null
+)
+create table characteristic_monitors(
+	id serial primary key not null,
+	response_time varchar(255) not null,
+	display int not null,
+	display_hz int not null,
+	matrix varchar(255) not null,
+	resolution varchar(255) not null,
+	color_depth	varchar(255) not null,
+	brightness int not null,
+	createdAt timestamp not null,
+	updatedAt timestamp not null
+);
